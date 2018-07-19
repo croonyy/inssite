@@ -1,0 +1,77 @@
+{% extends "repsys/base.html" %}
+
+{% block leftsider %}
+<ul id="mainnav-menu" class="list-group">
+    <li>
+        <a href="#" aria-expanded="false"><i class="ion-pie-graph"></i><span class="menu-title">图表</span><i
+                class="arrow"></i></a>
+        <ul class="nav">
+            {% for dept in dept_list %}
+            <li>
+                <a href="#"><span class="menu-title">{{dept}}</span><i class="arrow"></i></a>
+                <ul class="nav">
+                    {% for query in query_list %}
+                    <!--{% if query.department == dept %}-->
+                    <li><a href="" onclick="get_query({{query.pk}})" >{{query.query_name}}:{{query.pk}}</a></li>
+                    <!--{% endif %}-->
+                    {% endfor %}
+                </ul>
+            </li>
+            {% endfor %}
+        </ul>
+    </li>
+</ul>
+<!---->
+<!--<a href="#" aria-expanded="false">-->
+<!--<i class="ion-pie-graph"></i>-->
+<!--<span class="menu-title">图表</span>-->
+<!--<i class="arrow"></i>-->
+<!--</a>-->
+<!--{% for dpet in dpet_list %}-->
+<!--<a href="#" aria-expanded="false">-->
+<!--<i class="ion-pie-graph"></i>-->
+<!--<span class="menu-title">{{dpet.value}}</span>-->
+<!--<i class="arrow"></i>-->
+<!--</a>-->
+<!--{% endfor %}-->
+
+<!--<li>-->
+<!--<a href="#" aria-expanded="false"><i class="ion-pie-graph"></i><span class="menu-title">图表</span><i-->
+<!--class="arrow"></i></a>-->
+<!--<ul class="nav collapse">-->
+<!--<li>-->
+<!--<a href="#" aria-expanded="false"><span class="menu-title">机构资金</span><i class="arrow"></i></a>-->
+<!--<ul class="nav collapse">-->
+<!--<li><a href="#">图表1</a></li>-->
+<!--<li><a href="#">图表2</a></li>-->
+<!--<li><a href="#">图表3</a></li>-->
+<!--</ul>-->
+<!--<li>-->
+<!--<a href="#">-->
+<!--Settings-->
+<!--</a>-->
+<!--</li>-->
+<!--</ul>-->
+<!--</li>-->
+{% endblock %}
+
+{% block content %}
+div
+<p>你好啊</p>
+{% endblock %}
+
+<script>
+    function get_query(num) {
+        alert("get_query");
+        $.ajax({
+            url:"../get_query-" + num,
+            success:function(data){
+                alert("test......."+data);
+            },
+            error:function(){
+                alert("出错啦，请刷新页面，重试");
+            },
+        });
+
+    }
+</script>

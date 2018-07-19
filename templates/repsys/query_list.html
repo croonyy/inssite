@@ -1,0 +1,3 @@
+{% for item in query_list %}
+    {{ item }}{% if not forloop.last %},{% endif %}
+{% endfor %}

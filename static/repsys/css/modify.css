@@ -1,0 +1,11 @@
+.nav .open > a:hover {
+    background-color: #eee;
+    border-color: #337ab7
+}
+
+.dropdown-menu > .active > a:hover {
+    color: #eee;
+    text-decoration: none;
+    background-color: #337ab7;
+    outline: 0
+}
