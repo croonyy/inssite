@@ -91,7 +91,7 @@
 
     <!-- BACKGROUND IMAGE -->
     <!--===================================================-->
-    <div id="bg-overlay" class="bg-img" style="background-image: url(static/img/bg-img/1.jpg)"></div>
+    <!--<div id="bg-overlay" class="bg-img" style="background-image: url(static/img/bg-img/1.jpg)"></div>-->
 
 
     <!-- LOGIN FORM -->
@@ -105,7 +105,7 @@
             <div class="mar-ver pad-btm"></div>
             <div class="panel-body">
 
-                <form action={% url 'test' %} method='POST'>
+                <form action={% url 'login_validate' %} method='POST'>
                     {% csrf_token %}
                     <div class="form-group">
                         <input type="text" class="form-control" placeholder="Username" name="username" autofocus>
@@ -116,6 +116,11 @@
                     <div class="checkbox pad-btm text-left">
                         <input id="form-checkbox" class="magic-checkbox" type="checkbox" name="remember">
                         <label for="form-checkbox">Remember me</label>
+                        {% if wrong %}
+                        <hr>
+                        <lable style="color: red">请验证账号密码重新登录！</lable>
+                        {% endif %}
+
                     </div>
                     <button class="btn btn-primary btn-lg btn-block" type="submit">Sign In</button>
                 </form>

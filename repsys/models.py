@@ -55,7 +55,7 @@ class RptDataSource(models.Model):
     extention_b = models.CharField(max_length=100, blank=True, null=True)
 
     def __str__(self):
-        return self.report_name
+        return self.host
 
 
 class RptQuery(models.Model):
@@ -70,7 +70,7 @@ class RptQuery(models.Model):
     create_time = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
-        return self.report_name
+        return self.query_name
 
     # 代码简略显示40个字符
     def short_code(self):

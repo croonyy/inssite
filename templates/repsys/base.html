@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Charts | institution</title>
-
+    {% block head %}{% endblock %}
 
     <!--STYLESHEET-->
     <!--=================================================-->
@@ -23,6 +23,7 @@
 
 
     <!--Nifty Stylesheet [ REQUIRED ]-->
+    <!--<link href="/static/repsys/css/nifty.css" rel="stylesheet">-->
     <link href="/static/repsys/css/nifty.min.css" rel="stylesheet">
 
 
@@ -158,10 +159,9 @@
 
     =================================================-->
 
-
 </head>
 
-<!--TIPS-->
+<!--TIPS--ccc>
 <!--You may remove all ID or Class names which contain "demo-", they are only used for demonstration. -->
 <body>
 <div id="container" class="effect aside-float aside-bright mainnav-lg navbar-fixed footer-fixed">
@@ -174,8 +174,9 @@
             <!--Brand logo & name-->
             <!--================================-->
             <div class="navbar-header">
-                <a href={% url 'base' %} class="navbar-brand">
+                <a href={% url 'layout' %} class="navbar-brand">
                 <img src="/static/repsys/img/logo.png" alt="Logo" class="brand-icon">
+                <!--<p class="brand-icon">INS</p>-->
                 <!--<span class="ion-stats-bars"></span>-->
                 <div class="brand-title">
                     <span class="brand-text">INS Report SYS</span>
@@ -201,8 +202,8 @@
                     <!--End Navigation toogle button-->
 
                     <li>
-                        <a href="#">
-                            <i class="ion-happy"> </i>你好啊
+                        <a href="{% url 'index' %}">
+                            <i class="ion-home"> </i>首页！
                         </a>
                     </li>
 
@@ -219,47 +220,47 @@
                                          alt="">
                                     <!--<i class="demo-pli-male ic-user"></i>-->
                                 </span>
-                            <div class="username hidden-xs">游客</div>
+                            <div class="username hidden-xs">{{username}}</div>
                         </a>
 
 
                         <div class="dropdown-menu dropdown-menu-md dropdown-menu-right panel-default">
                             <!-- User dropdown menu -->
                             <ul class="head-list">
-                                <li>
-                                    <a href="#">
-                                        <i class="ion-flag"></i> Profile
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <span class="badge badge-danger pull-right">9</span>
-                                        <i class="ion-heart"></i> Messages
-                                    </a>
-                                </li>
+                                <!--<li>-->
+                                    <!--<a href="#">-->
+                                        <!--<i class="ion-flag"></i> Profile-->
+                                    <!--</a>-->
+                                <!--</li>-->
+                                <!--<li>-->
+                                    <!--<a href="#">-->
+                                        <!--<span class="badge badge-danger pull-right">9</span>-->
+                                        <!--<i class="ion-heart"></i> Messages-->
+                                    <!--</a>-->
+                                <!--</li>-->
                                 <li>
                                     <a href="#">
                                         <span class="label label-success pull-right">New</span>
-                                        <i class="ion-briefcase"></i> Settings
+                                        <i class="ion-briefcase"></i> 设置（有待完善）
                                     </a>
                                 </li>
+                                <!--<li>-->
+                                    <!--<a href="#">-->
+                                        <!--<i class="ion-lock-combination"></i> Help-->
+                                    <!--</a>-->
+                                <!--</li>-->
                                 <li>
                                     <a href="#">
-                                        <i class="ion-lock-combination"></i> Help
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <i class="ion-person-stalker"></i> Lock screen
+                                        <i class="ion-person-stalker"></i> 锁屏（有待完善）
                                     </a>
                                 </li>
                             </ul>
 
                             <!-- Dropdown footer -->
                             <div class="pad-all text-right">
-                                <a href="#" class="btn btn-primary">
-                                    <!--pages-login.html-->
-                                    <i class="ion-log-out"></i> Logout
+                                <a href={% url 'logout' %} class="btn btn-primary">
+                                <!--pages-login.html-->
+                                <i class="ion-log-out"></i> Logout
                                 </a>
                             </div>
                         </div>
@@ -283,6 +284,7 @@
 
 
     <!--MAIN NAVIGATION-->
+
     <!--===================================================-->
     <nav id="mainnav-container">
         <div id="mainnav">
@@ -292,7 +294,7 @@
             <div id="mainnav-menu-wrap">
                 <div class="nano">
                     <div class="nano-content">
-                            {% block leftsider %}{% endblock %}
+                        {% block leftsider %}{% endblock %}
                     </div>
                 </div>
             </div>
@@ -310,7 +312,46 @@
         <!--CONTENT CONTAINER-->
         <!--===================================================-->
         <div id="content-container">
-            {% block content %}{% endblock %}
+
+            <!--Page Title-->
+            <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+            <!--<div id="page-title">-->
+            <!--<h1 class="page-header text-overflow">{% block page-title %}{% endblock %}</h1>-->
+
+            <!--&lt;!&ndash;Searchbox&ndash;&gt;-->
+            <!--<div class="searchbox">-->
+            <!--<div class="input-group custom-search-form">-->
+            <!--<input type="text" class="form-control" placeholder="Search..">-->
+            <!--<span class="input-group-btn">-->
+            <!--<button class="text-muted" type="button"><i class="ion-search"></i></button>-->
+            <!--</span>-->
+            <!--</div>-->
+            <!--</div>-->
+            <!--</div>-->
+            <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+            <!--End page title-->
+
+
+            <!--Breadcrumb-->
+            <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+            <!--<ol class="breadcrumb">-->
+            <!--<li><a href="#">Home</a></li>-->
+            <!--<li class="active">Charts</li>-->
+            <!--</ol>-->
+            <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+            <!--End breadcrumb-->
+
+
+            <!--Page content-->
+            <!--===================================================-->
+            <div id="page-content">
+
+                {% block page-content %}{% endblock %}
+            </div>
+            <!--===================================================-->
+            <!--End page content-->
+
+
         </div>
         <!--===================================================-->
         <!--END CONTENT CONTAINER-->
@@ -469,5 +510,8 @@
 
 
 </body>
+{% block endjs %}
+{% endblock %}
+
 </html>
 

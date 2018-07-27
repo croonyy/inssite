@@ -18,11 +18,14 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from django.views.static import serve
 from django.conf import settings
+# from repsys import views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^static/(?P<path>.*)$', serve, {'document_root': settings.STATIC_ROOT}),
     url(r'^', include('repsys.urls')),
+
+    # url(r'^layout/$', views.layout),
     # django-users2 文档
     # https://pypi.org/project/django-users2/
     url(r'^accounts/', include('users.urls')),

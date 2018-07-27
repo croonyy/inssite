@@ -1,0 +1,28 @@
+table#query_table {
+    font-family: verdana, arial, sans-serif;
+    font-size: 11px;
+    color: #333333;
+    border-width: 1px;
+    border-color: #999999;
+    /*border-color: #666666;*/
+    border-collapse: collapse;
+}
+
+table#query_table th {
+    background: #aaaaaa;
+    border-width: 1px;
+    padding: 6px;
+    border-style: solid;
+    border-color: #ffffff;
+    text-align: left;
+    vertical-align: middle;
+}
+
+table#query_table td {
+    background: #eeeeee;
+    /*background:#ffffff;*/
+    border-width: 1px;
+    padding: 6px;
+    border-style: solid;
+    border-color: #ffffff;
+}

@@ -1,0 +1,48 @@
+{% extends "repsys/base.html" %}
+
+
+{% block page-content %}
+
+
+<div class="panel" style="height: 800px;width: 100%">
+    <div class="panel-heading">
+        <div class="panel-control panel-control-component">
+            <button class="btn-success" id="load_engine">加载引擎</button>
+            <button class="btn-success" id="load_data">加载数据</button>
+            <span class="text-muted">Auto update</span>
+            <input id="demo-auto-gauge" class="toggle-switch" type="checkbox">
+            <label for="demo-auto-gauge" class="text-muted"></label>
+        </div>
+        <h3 class="panel-title">Gauge</h3>
+    </div>
+    <!--<a id="test">更新</a><span>&nbsp&nbsp&nbsp</span><a id="re" onclick="test2()">加载数据</a>-->
+    <div class="panel-body" id="data_container" style="height: 800px;width: 100%">
+        <perspective-viewer id="my_viewer" settings="true"
+                            style="height: 90%;width: 100%">
+
+        </perspective-viewer>
+    </div>
+</div>
+{% endblock %}
+
+{% block endjs %}
+
+<link href="/static/repsys/plugins/pace/pace.min.css" rel="stylesheet">
+<script src="/static/repsys/plugins/pace/pace.min.js"></script>
+
+<!--<link rel="stylesheet" href="/static/repsys/plugins/perspective/material.dark.css">-->
+<link rel="stylesheet" href="/static/repsys/plugins/perspective/material.css">
+<script src="/static/repsys/plugins/perspective/perspective.view.js"></script>
+<!--<script src="/static/repsys/plugins/perspective/perspective.node.js"></script>&ndash;&gt;-->
+<!--<script src="/static/repsys/plugins/perspective/perspective.umd.js"></script>-->
+<script src="/static/repsys/plugins/perspective/hypergrid.plugin.js"></script>
+<script src="/static/repsys/plugins/perspective/highcharts.plugin.js"></script>
+<script src="/static/repsys/plugins/jquery/dist/jquery.js"></script>
+<!--<script src="/static/repsys/plugins/perspective/wasm_async/perspective.js"></script>-->
+<!--<script src="/static/repsys/plugins/perspective/wasm_async/psp.js"></script>-->
+<!--<script src="https://unpkg.com/@jpmorganchase/perspective-examples/build/perspective.view.js"></script>-->
+<!--<script src="https://unpkg.com/@jpmorganchase/perspective-examples/build/hypergrid.plugin.js"></script>-->
+<!--<script src="https://unpkg.com/@jpmorganchase/perspective-examples/build/highcharts.plugin.js"></script>-->
+
+<script src="/static/repsys/plugins/perspective/croonyy.js"></script>
+{% endblock %}

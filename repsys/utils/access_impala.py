@@ -31,10 +31,11 @@ from impala.util import as_pandas
 from time import time
 
 
-def impala_query(sql):
+def impala_query(username, pwd, sql):
     # 建立连接
     try:
-        conn = connect(host='10.2.8.95', auth_mechanism='PLAIN', port=21050, user='yangyuan', password='yangyuan')
+        # conn = connect(host='10.2.8.95', auth_mechanism='PLAIN', port=21050, user='yangyuan', password='yangyuan')
+        conn = connect(host='10.2.8.95', auth_mechanism='PLAIN', port=21050, user=username, password=pwd)
     except EnvironmentError:
         print(u"connect failure")
     cursor = conn.cursor()

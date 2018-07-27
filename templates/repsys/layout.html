@@ -1,5 +1,14 @@
 {% extends "repsys/base.html" %}
 
+
+{% block head %}
+<link rel="stylesheet" href="/static/repsys/plugins/perspective/material.css">
+<script src="/static/repsys/plugins/perspective/perspective.view.js"></script>
+<script src="/static/repsys/plugins/perspective/hypergrid.plugin.js"></script>
+<script src="/static/repsys/plugins/perspective/highcharts.plugin.js"></script>
+<!--<link href="/static/repsys/css/layout.css" rel="stylesheet">-->
+{% endblock %}
+
 {% block leftsider %}
 <ul id="mainnav-menu" class="list-group">
     <li>
@@ -12,7 +21,7 @@
                 <ul class="nav">
                     {% for query in query_list %}
                     <!--{% if query.department == dept %}-->
-                    <li><a href="" onclick="get_query({{query.pk}})" >{{query.query_name}}:{{query.pk}}</a></li>
+                    <li><a onclick="get_query({{query.pk}});">{{query.query_name}}</a></li>
                     <!--{% endif %}-->
                     {% endfor %}
                 </ul>
@@ -55,23 +64,104 @@
 <!--</li>-->
 {% endblock %}
 
-{% block content %}
-div
-<p>你好啊</p>
+
+{% block page-content %}
+
+<!--<h4 class="text-main pad-btm bord-btm">Charts test</h4>-->
+
+<!--Morris Charts -->
+<!--===================================================-->
+<div class="row">
+    <div class="col-lg-3">
+        <div class="panel panel-colorful panel-warning">
+            <div class="panel-heading">
+                <h3 class="panel-title">Warning</h3>
+            </div>
+            <div class="panel-body">
+                <p>请注意：js分析引擎是国外开源的，没有考虑到中国的用户，所以查询字段别名不能包含中文。</p>
+            </div>
+        </div>
+        <div class="panel">
+            <div class="panel-heading">
+                <h3 class="panel-title">查询编辑器</h3>
+            </div>
+
+            <!--Input Size-->
+            <!--===================================================-->
+            <div class="panel-body">
+                <form class="form-horizontal" id="app">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">查询名称</label>
+                        <div class="col-sm-9">
+                            <input v-model="q_name" type="text" placeholder="查询名称" class="form-control" name="q_name">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">作者</label>
+                        <div class="col-sm-9">
+                            <input v-model="author" type="text" placeholder="作者" class="form-control" name="author">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">部门</label>
+                        <div class="col-sm-9">
+                            <input v-model="dept" type="text" placeholder="部门" class="form-control" name="dept">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">查询code</label>
+                        <textarea v-model="code" placeholder="请输入查询语句：" rows="10" class="form-control"
+                                  name="code"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">说明</label>
+                        <textarea v-model="comment" placeholder="说明：" rows="5" class="form-control"
+                                  name="comment"></textarea>
+                    </div>
+                    <!--<div class="panel-footer"></div>-->
+                </form>
+                <div>
+                    <div class="col-sm-offset-3">
+                        <button class="btn btn-mint" onclick="save_query()">保存查询</button>
+                        <button class="btn btn-warning">执行</button>
+                    </div>
+                </div>
+            </div>
+            <!--===================================================-->
+            <!--End Input Size-->
+
+
+        </div>
+
+    </div>
+    <div class="col-lg-9">
+        <div class="panel" style="height: 900px;width: 100%">
+            <div class="panel-heading">
+                <h3 class="panel-title">Analysis Area</h3>
+            </div>
+            <div class="panel-body" id="data_container" style="height: 900px;width: 100%">
+                <perspective-viewer id="my_viewer" settings="true"
+                                    style="height: 90%;width: 100%">
+
+                </perspective-viewer>
+            </div>
+        </div>
+    </div>
+</div>
+<!--===================================================-->
+<!-- End Morris Charts -->
+
 {% endblock %}
 
-<script>
-    function get_query(num) {
-        alert("get_query");
-        $.ajax({
-            url:"../get_query-" + num,
-            success:function(data){
-                alert("test......."+data);
-            },
-            error:function(){
-                alert("出错啦，请刷新页面，重试");
-            },
-        });
 
-    }
-</script>
+{% block endjs %}
+
+<script src="/static/repsys/js/query.js"></script>
+<script src="/static/repsys/js/croonyy.js"></script>
+
+{% endblock %}
+
+
+
+
