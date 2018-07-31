@@ -1,9 +1,11 @@
 // 设置数据源的几种方式
 
 
-var data;
-let elem = document.getElementById('my_viewer');
-elem.load([{x: 1, y: 'a'}, {x: 2, y: 'b'}]);
+// var data;
+// let elem = document.getElementById('my_viewer');
+// elem.load([{x: 1, y: 'a'}, {x: 2, y: 'b'}]);
+
+// [{x: 1, y: 'a'}, {x: 2, y: 'b'}]
 
 // $('#load_engine').click(function () {
 //     elem.load([{x: 1, y: 'a'}, {x: 2, y: 'b'}]);
@@ -85,4 +87,31 @@ elem.load([{x: 1, y: 'a'}, {x: 2, y: 'b'}]);
 //     // console.log(data_re)
 //     console.log(my_viewer.getAttribute('columns'))
 // };
+
+
+
+// new Promise(function (ok, nok) {
+//     load_eng(function () {
+//         elem.load([{x: 1}]);
+//         ok(1)
+//     }).then(function (value) {
+//         elem.setAttribute("settings", "true");
+//         side_panel.setAttribute("style", "display:flex");
+//         top_panel.setAttribute("style", "display:flex");
+//         console.log(value);
+//     })
+// });
+
+
+
+// function ref_obg(v_obj) {
+//     t_obj.rid = v_obj.rid;
+//     t_obj.rname = v_obj.q_name;
+//     t_obj.rauthor = v_obj.author;
+//     t_obj.rdept = v_obj.dept;
+//     t_obj.rcode = v_obj.code;
+//     t_obj.rcmt = v_obj.comment;
+//     return t_obj
+// }
+
 

@@ -1,0 +1,155 @@
+<!DOCTYPE >
+<html>
+<head>
+    <title>DIV CSS遮罩层</title>
+    <script language="javascript" type="text/javascript">
+        function showdiv() {
+            document.getElementById("bg").style.display = "block";
+            document.getElementById("show").style.display = "block";
+        }
+
+        function hidediv() {
+            document.getElementById("bg").style.display = 'none';
+            document.getElementById("show").style.display = 'none';
+        }
+    </script>
+    <style type="text/css">
+        #bg {
+            display: none;
+            position: absolute;
+            top: 0%;
+            left: 0%;
+            width: 100%;
+            height: 100%;
+            background-color: black;
+            z-index: 1001;
+            -moz-opacity: 0.7;
+            opacity: .70;
+            filter: alpha(opacity=70);
+        }
+
+        #show {
+            display: none;
+            position: absolute;
+            top: 25%;
+            left: 22%;
+            width: 53%;
+            height: 49%;
+            padding: 8px;
+            border: 8px solid #E8E9F7;
+            background-color: white;
+            z-index: 1002;
+            overflow: auto;
+        }
+
+        .div1 {
+            position: relative;
+            width: 500px;
+            height: 500px;
+            top: 0;
+            left: 0;
+        }
+
+        .div2 {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+        }
+
+        .spinner {
+            margin: 100px auto;
+            width: 50px;
+            height: 60px;
+            text-align: center;
+            font-size: 10px;
+        }
+
+        .spinner > div {
+            background-color: #67CF22;
+            height: 100%;
+            width: 6px;
+            display: inline-block;
+
+            -webkit-animation: stretchdelay 1.2s infinite ease-in-out;
+            animation: stretchdelay 1.2s infinite ease-in-out;
+        }
+
+        .spinner .rect2 {
+            -webkit-animation-delay: -1.1s;
+            animation-delay: -1.1s;
+        }
+
+        .spinner .rect3 {
+            -webkit-animation-delay: -1.0s;
+            animation-delay: -1.0s;
+        }
+
+        .spinner .rect4 {
+            -webkit-animation-delay: -0.9s;
+            animation-delay: -0.9s;
+        }
+
+        .spinner .rect5 {
+            -webkit-animation-delay: -0.8s;
+            animation-delay: -0.8s;
+        }
+
+        @-webkit-keyframes stretchdelay {
+            0%, 40%, 100% {
+                -webkit-transform: scaleY(0.4)
+            }
+            20% {
+                -webkit-transform: scaleY(1.0)
+            }
+        }
+
+        @keyframes stretchdelay {
+            0%, 40%, 100% {
+                transform: scaleY(0.4);
+                -webkit-transform: scaleY(0.4);
+            }
+            20% {
+                transform: scaleY(1.0);
+                -webkit-transform: scaleY(1.0);
+            }
+        }
+    </style>
+</head>
+
+
+<body>
+<div>
+    <input id="btnshow" type="button" value="打开" onclick="showdiv();"/>
+    <p>sdfsdfsd fsdfsdfnsbdbfsbfdfnsbdfdsdfsdfsd fsdfsdfnsbdbfsbfdfnsbdfdsdfsdfsd fsdfsdfnsbdbfsbfdfnsbdfdsdfsdfsd
+        fsdfsdfsd fsdfsdfnsbdbfsbfdfnsbdfdsdfsdfsd fsdfsfnsbdfdsdfsdfsd fsdfsdfnsbdbfsbfdfnsbdfdsdfsdfsd
+        fsdfsdfnsbdbfsbfdfnsbdfdsdfsdfsd
+        fsdfsdfnsbdbfsbfdfnsbdfdsdfsdfsd fsdfsdfnsbdbfsbfdfnsbdfd</p>
+    <div id="bg">
+    </div>
+</div>
+
+
+<div id="show">
+    内容测试
+    <input id="btnclose" type="button" value="关闭" onclick="hidediv();"/>
+</div>
+
+
+<div class="div1">
+    <div class="div2">
+    </div>
+    <div>nihao</div>
+</div>
+</body>
+
+
+<div class="spinner">
+    <div class="rect1"></div>
+    <div class="rect2"></div>
+    <div class="rect3"></div>
+    <div class="rect4"></div>
+    <div class="rect5"></div>
+</div>
+</html>

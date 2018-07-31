@@ -62,11 +62,12 @@ class RptQuery(models.Model):
     class Meta:
         db_table = 'rptquery'
 
-    query_name = models.CharField(max_length=40, unique=True)
-    author     = models.CharField(max_length=40)
+    query_name = models.CharField(max_length=40, unique=True, blank=False)
+    author = models.CharField(max_length=40)
     department = models.CharField(max_length=40, blank=True, null=True)
     query_code = models.TextField()
-    comment    = models.TextField(blank=True, null=True)
+    comment = models.TextField(blank=True, null=True)
+    userid = models.ForeignKey('RptUser')
     create_time = models.DateTimeField(default=timezone.now)
 
     def __str__(self):

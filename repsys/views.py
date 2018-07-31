@@ -29,26 +29,46 @@ def index(request):
 
 
 def login(request):
-    # print(request.session['username'])
-    # print(request.session['password'])
-    # print('asdfas df')
-    return render(request, 'repsys/login.html')
-
-
-def login_validate(request):
-    uname = request.POST['username']
-    pwd = request.POST.get('password')
-    remember = request.POST.get('remember')
-
-    # 不能用get ，查不到会报错
-    user = RptUser.objects.filter(username=uname, password=pwd)
-    if user:
-        request.session['username'] = uname
-        return redirect(reverse('layout'))
+    if request.method == "GET":
+        # print(request.session['username'])
+        # print(request.session['password'])
+        # print('asdfas df')
+        return render(request, 'repsys/login.html')
     else:
-        # 用来在登录页面显示登录失败
-        wrong = 1
-        return render(request, 'repsys/login.html', {'wrong': wrong})
+        uname = request.POST['username']
+        pwd = request.POST.get('password')
+        remember = request.POST.get('remember')
+
+        # 不能用get ，查不到会报错
+        try:
+            user = RptUser.objects.get(username=uname, password=pwd)
+        except:
+            wrong = 1
+            return render(request, 'repsys/login.html', {'wrong': wrong})
+        if user:
+            request.session['userid'] = user.pk
+            request.session['username'] = uname
+            return redirect(reverse('layout'))
+        else:
+            # 用来在登录页面显示登录失败
+            wrong = 1
+            return render(request, 'repsys/login.html', {'wrong': wrong})
+
+
+# def login_validate(request):
+#     uname = request.POST['username']
+#     pwd = request.POST.get('password')
+#     remember = request.POST.get('remember')
+#
+#     # 不能用get ，查不到会报错
+#     user = RptUser.objects.filter(username=uname, password=pwd)
+#     if user:
+#         request.session['username'] = uname
+#         return redirect(reverse('layout'))
+#     else:
+#         # 用来在登录页面显示登录失败
+#         wrong = 1
+#         return render(request, 'repsys/login.html', {'wrong': wrong})
 
 
 def logout(request):
@@ -81,21 +101,50 @@ def get_query(request, rid):
                  'rdept': rq1.department, 'rcode': rq1.query_code, 'rcmt': rq1.comment}
     return JsonResponse(name_dict)
 
-@csrf_exempt
+
+# @csrf_exempt
 # @login_required
-def savequery(request, obj):
-    rq1 = RptQuery.objects.get(pk=obj.rid)
-    if rq1:
-        rq1.query_name = obj.rname
-        rq1.author = obj.rauthor
-        rq1.department = obj.rdept
-        rq1.query_code = obj.rcode
-        rq1.comment = obj.rcmt
-        rq1.save()
-        status = 1
+def savequery(request):
+    userid = request.session["userid"]
+    # print(userid)
+    # if request.POST:
+    if request.POST.get('rid'):
+        rq1 = RptQuery.objects.get(pk=request.POST.get('rid'))
     else:
-        status = 0
-    return HttpResponse(status)
+        rq1 = RptQuery()
+    rq1.query_name = request.POST.get('rname')
+    rq1.author = request.POST.get('rauthor')
+    rq1.department = request.POST.get('rdept')
+    rq1.query_code = request.POST.get('rcode')
+    rq1.comment = request.POST.get('rcmt')
+    rq1.userid = RptUser.objects.get(pk=userid)
+    try:
+        rq1.save()
+        return JsonResponse({'status': 0})
+    except Exception, e:
+        return JsonResponse({'status': 1, 'except': str(e)})
+    # else:
+    #     return JsonResponse({'status': 1, 'except': '提交请求出错，请重试！'})
+
+
+def exequery(request):
+    try:
+        e_code = request.POST.get('code')
+        q_result = impala_query('yangyuan', 'yangyuan', e_code)
+        data = df_to_json(q_result[0])
+        return JsonResponse(data, safe=False)
+    except Exception, e:
+        return JsonResponse({'status': 1, 'except': str(e)})
+
+
+def del_query(request):
+    try:
+        q_id = request.POST.get('q_id')
+        q = RptQuery.objects.get(pk=q_id)
+        q.delete()
+        return JsonResponse({'status': 0})
+    except Exception, e:
+        return JsonResponse({'status':1,'except':str(e)})
 
 
 # 以下是测试
@@ -201,6 +250,11 @@ def test4(request):
 def test5(request):
     # password = request.session['password']
     return render(request, 'repsys/test5.html')
+
+
+def test6(request):
+    # password = request.session['password']
+    return render(request, 'repsys/test6.html')
 
 
 def base(request):

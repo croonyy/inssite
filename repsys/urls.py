@@ -7,13 +7,15 @@ from repsys import views as repsysviews
 from django.conf import settings
 
 urlpatterns = [
-    url(r'^$', repsysviews.index, name='index'),
+    url(r'^$', repsysviews.login, name='index'),
     url(r'^login/$', repsysviews.login, name='login'),
-    url(r'^login_validate/$', repsysviews.login_validate, name='login_validate'),
+    # url(r'^login_validate/$', repsysviews.login_validate, name='login_validate'),
     url(r'^logout/$', repsysviews.logout, name='logout'),
     url(r'^layout/$', repsysviews.layout, name="layout"),
     url(r'^getquery-(?P<rid>\d+)/$', repsysviews.get_query,name='get_query'),
     url(r'^savequery/$', repsysviews.savequery,name='savequery'),
+    url(r'^del_query/$', repsysviews.del_query,name='del_query'),
+    url(r'^exequery/$', repsysviews.exequery,name='exequery'),
 
     # 以下是ajax测试
 
@@ -34,6 +36,7 @@ urlpatterns = [
     # url(r'^test3/$', repsysviews.test3, name='test3'),
     url(r'^test4/$', repsysviews.test4, name='test4'),
     url(r'^test5/$', repsysviews.test5, name='test5'),
+    url(r'^test6/$', repsysviews.test6, name='test6'),
     # url(r'^add/$', repsysviews.test3, name='add'),
 
     # url(r'^querylist/$', repsysviews.query_list),

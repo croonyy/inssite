@@ -7,12 +7,13 @@
 <script src="/static/repsys/plugins/perspective/hypergrid.plugin.js"></script>
 <script src="/static/repsys/plugins/perspective/highcharts.plugin.js"></script>
 <!--<link href="/static/repsys/css/layout.css" rel="stylesheet">-->
+<link rel="stylesheet" href="/static/repsys/css/waiting.css">
 {% endblock %}
 
 {% block leftsider %}
 <ul id="mainnav-menu" class="list-group">
     <li>
-        <a href="#" aria-expanded="false"><i class="ion-pie-graph"></i><span class="menu-title">图表</span><i
+        <a href="#" aria-expanded="false"><i class="ion-pie-graph"></i><span class="menu-title">查询</span><i
                 class="arrow"></i></a>
         <ul class="nav">
             {% for dept in dept_list %}
@@ -75,14 +76,18 @@
     <div class="col-lg-3">
         <div class="panel panel-colorful panel-warning">
             <div class="panel-heading">
-                <h3 class="panel-title">Warning</h3>
+                <!--<button class="btn btn-danger btn-icon btn-circle" style="font-size: 5%"><i class="ion-information-circled"></i></button>-->
+                <h3 class="panel-title"><i class="ion-information-circled icon-fw"></i><span
+                        class="menu-title"> Warning</span></h3>
             </div>
             <div class="panel-body">
-                <p>请注意：js分析引擎是国外开源的，没有考虑到中国的用户，所以查询字段别名不能包含中文。</p>
+                <p>请注意：分析引擎是国外开源的，没有考虑到中国的用户，所以查询字段别名不能包含中文。</p>
             </div>
         </div>
         <div class="panel">
+
             <div class="panel-heading">
+
                 <h3 class="panel-title">查询编辑器</h3>
             </div>
 
@@ -90,11 +95,12 @@
             <!--===================================================-->
             <div class="panel-body">
                 <form class="form-horizontal" id="app">
-                    {% csrf_token %}
+
                     <div class="form-group">
                         <label class="col-sm-3 control-label">查询名称</label>
                         <div class="col-sm-9">
-                            <input v-model="q_name" type="text" placeholder="查询名称" class="form-control" name="q_name">
+                            <input v-model="q_name" type="text" placeholder="查询名称" class="form-control"
+                                   name="q_name">
                         </div>
                     </div>
                     <div class="form-group">
@@ -110,21 +116,34 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="control-label">查询code</label>
+
+                        <label class="control-label">查询sql</label>
                         <textarea v-model="code" placeholder="请输入查询语句：" rows="10" class="form-control"
-                                  name="code"></textarea>
+                                  name="code" style="opacity:1">
+                        </textarea>
+
+
                     </div>
                     <div class="form-group">
                         <label class="control-label">说明</label>
-                        <textarea v-model="comment" placeholder="说明：" rows="5" class="form-control"
+                        <textarea v-model="comment" placeholder="说明" rows="5" class="form-control"
                                   name="comment"></textarea>
                     </div>
                     <!--<div class="panel-footer"></div>-->
                 </form>
                 <div>
-                    <div class="col-sm-offset-3">
+                    <div>
+                        <!--<div style="position: absolute;width: 100%;height: 100%;background-color: red"></div>-->
                         <button class="btn btn-mint" onclick="save_query()">保存查询</button>
-                        <button class="btn btn-warning">执行</button>
+                        <button class="btn btn-warning" onclick="del_query()">删除查询</button>
+                        <button class="btn btn-success" onclick="get_data()">执行</button>
+                        <div v-if="seen" class="spinner btn" id="waiting">
+                            <div class="rect1"></div>
+                            <div class="rect2"></div>
+                            <div class="rect3"></div>
+                            <div class="rect4"></div>
+                            <div class="rect5"></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -134,11 +153,18 @@
 
         </div>
 
+
     </div>
     <div class="col-lg-9">
         <div class="panel" style="height: 900px;width: 100%">
             <div class="panel-heading">
-                <h3 class="panel-title">Analysis Area</h3>
+                <div class="panel-control">
+                    <button class="btn btn-success" onclick="load_data()">
+                        <i class="ion-ios-loop-strong"></i> 重新加载数据
+                    </button>
+                </div>
+                <h3 class="panel-title">Analysis Area<span style="color:#bbb;font-size: small"> (点击小扳手可以关闭或打开透视分析面板，开始你的分析吧……)</span>
+                </h3>
             </div>
             <div class="panel-body" id="data_container" style="height: 900px;width: 100%">
                 <perspective-viewer id="my_viewer" settings="true"
@@ -156,9 +182,49 @@
 
 
 {% block endjs %}
+<!--<script>-->
+<!--jQuery(document).ajaxSend(function (event, xhr, settings) {-->
+<!--function getCookie(name) {-->
+<!--var cookieValue = null;-->
+<!--if (document.cookie && document.cookie != '') {-->
+<!--var cookies = document.cookie.split(';');-->
+<!--for (var i = 0; i < cookies.length; i++) {-->
+<!--var cookie = jQuery.trim(cookies[i]);-->
+<!--// Does this cookie string begin with the name we want?-->
+<!--if (cookie.substring(0, name.length + 1) == (name + '=')) {-->
+<!--cookieValue = decodeURIComponent(cookie.substring(name.length + 1));-->
+<!--break;-->
+<!--}-->
+<!--}-->
+<!--}-->
+<!--return cookieValue;-->
+<!--}-->
+
+<!--function sameOrigin(url) {-->
+<!--// url could be relative or scheme relative or absolute-->
+<!--var host = document.location.host; // host + port-->
+<!--var protocol = document.location.protocol;-->
+<!--var sr_origin = '//' + host;-->
+<!--var origin = protocol + sr_origin;-->
+<!--// Allow absolute or scheme relative URLs to same origin-->
+<!--return (url == origin || url.slice(0, origin.length + 1) == origin + '/') ||-->
+<!--(url == sr_origin || url.slice(0, sr_origin.length + 1) == sr_origin + '/') ||-->
+<!--// or any other URL that isn't scheme relative or absolute i.e relative.-->
+<!--!(/^(\/\/|http:|https:).*/.test(url));-->
+<!--}-->
+
+<!--function safeMethod(method) {-->
+<!--return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));-->
+<!--}-->
+
+<!--if (!safeMethod(settings.type) && sameOrigin(settings.url)) {-->
+<!--xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));-->
+<!--}-->
+<!--});-->
+<!--</script>-->
 
 <script src="/static/repsys/js/query.js"></script>
-<script src="/static/repsys/js/croonyy.js"></script>
+<script src="/static/repsys/plugins/perspective/mobile_fix.js"></script>
 
 {% endblock %}
 
